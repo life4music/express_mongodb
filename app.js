@@ -1,14 +1,24 @@
 var createError = require('http-errors'); //biblioteka do błędów http
+var cookieSession = require('cookie-session');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');  //do obługi ciasteczek
 var logger = require('morgan'); //do zrzucania logów w trybie developerskim
+var config = require('./config'); // dane kongiguracyjne do cookieSession
+var mongoose = require('mongoose'); //baza danych
+
+// połączenie z bazą danych
+mongoose.connect(config.db, {useNewUrlParser: true,  useUnifiedTopology: true}); 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('db connect');
+});
 
 var indexRouter = require('./routes/index');  // strona startowa
 var newsRouter = require('./routes/news');
 var quizRouter = require('./routes/quiz');
 var adminRouter = require('./routes/admin');
-const { compileClient } = require('pug');
 
 var app = express();  // uruchamiamy server
 
@@ -21,6 +31,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // do obsługi formularzy
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({
+  name: 'session',
+  keys: config.keySession,
+  maxAge: config.maxAgeSession
+}));
 
 // funkcja pobiera z req adres strony i przekazuje do widoku
 app.use(function(req, res, next) {
