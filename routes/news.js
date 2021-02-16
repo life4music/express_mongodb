@@ -3,7 +3,7 @@ const News = require('../models/news');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   // pobieranie danych wyszukiwania
   const search = req.query.search || '';
 
