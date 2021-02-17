@@ -11,7 +11,6 @@ router.get('/', (req, res, next) => {
 
 // GET do pokazania formularza
 router.get('/login', (req, res) => {
-  // po przechwyceniu adresu strony głównej
   res.render('login', { title: 'Logowanie' });
 });
 

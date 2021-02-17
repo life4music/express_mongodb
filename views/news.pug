@@ -9,5 +9,5 @@ block content
   each item in data 
     article 
       h1(class='title')=item.title
-      p(class='date')=item.created 
+        span(class='date')=item.created.toLocaleString()
       p=item.description

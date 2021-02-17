@@ -16,6 +16,6 @@ block content
       tr 
         td=index 
         td=item.title
-        td=item.created 
+        td=item.created.toLocaleString() 
         td 
           a(href=`/admin/news/delete/${item._id}`) Usuń
