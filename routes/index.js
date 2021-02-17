@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const login = 'admin';
-const password = '123';
+const password = 'qazwsx';
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
